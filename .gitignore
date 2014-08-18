@@ -1,0 +1,5 @@
+env/
+fail_postgres_install/
+*.swp
+*.swo
+*.pyc
