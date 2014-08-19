@@ -1,8 +1,7 @@
-from django.conf.urls import patterns, include, url
-from django.contrib import admin
+from django.conf.urls import url
 
-from .views import LogSpending
+from . import views
 
-urlpatterns = patterns('',
-    url(r'^$', LogSpending.as_view(), name="log_spending"),
-)
+urlpatterns = [
+    url(r'^$', views.log_spending),
+]

@@ -23,8 +23,8 @@ class Transaction(models.Model):
     amount = models.DecimalField(max_digits=14, decimal_places=2)
     notes = models.TextField()
     type = models.CharField(max_length=6, blank=True, choices=TYPE)
-    category = models.ManyToManyField(Category, blank=True)
-    tag = models.ManyToManyField(Tag, blank=True)
+    category = models.ManyToManyField(Category, blank=True, null=True)
+    tag = models.ManyToManyField(Tag, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if not self.id:

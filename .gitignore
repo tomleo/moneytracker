@@ -3,3 +3,5 @@ fail_postgres_install/
 *.swp
 *.swo
 *.pyc
+db_settings.json
+venv/

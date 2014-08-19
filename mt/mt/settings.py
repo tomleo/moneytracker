@@ -45,8 +45,11 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'widget_tweaks',
+
     'spending',
-    #'userprofile'
+    'userprofile',
+    'places'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -109,7 +112,7 @@ LOGGING = {
          'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': '/root/moneytraker/debug.log',
+            'filename': '/var/log/moneytraker/django_debug.log',
         },
     },
     'loggers': {
