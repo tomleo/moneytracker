@@ -1,3 +1,16 @@
 from django.contrib import admin
 
-# Register your models here.
+from . import models
+
+class CategoryAdmin(admin.ModelAdmin):
+    pass
+
+class TagAdmin(admin.ModelAdmin):
+    pass
+
+class TransactionAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(models.Category, CategoryAdmin)
+admin.site.register(models.Tag, TagAdmin)
+admin.site.register(models.Transaction, TransactionAdmin)

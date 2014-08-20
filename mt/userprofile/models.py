@@ -7,7 +7,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
 
     def __str__(self):
-        return self.user.userprofile
+        return self.user.email
 
 def create_user_profile(sender, instance, **kwargs):
     p = UserProfile.objects.get_or_create(user=instance)
