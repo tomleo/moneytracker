@@ -6,3 +6,4 @@ fail_postgres_install/
 db_settings.json
 venv/
 debug.log
+.vagrant/
