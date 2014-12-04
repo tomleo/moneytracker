@@ -5,3 +5,4 @@ fail_postgres_install/
 *.pyc
 db_settings.json
 venv/
+debug.log
