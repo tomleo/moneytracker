@@ -1,0 +1,17 @@
+server {
+        listen  8000;
+        server_name moneytracker;
+
+        location / {
+                include uwsgi_params;
+                uwsgi_pass      unix:///tmp/django.sock;
+        }
+
+	location /media {
+		alias /data/moneytracker/media;
+	}
+
+	location /static {
+		alias /data/moneytracker/static;
+	}
+}
