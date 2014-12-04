@@ -66,4 +66,7 @@ sudo /etc/init.d/nginx start
 ln -s /etc/nginx/sites-available/moneytracker /etc/nginx/sites-enabled/moneytracker
 sudo /etc/init.d/nginx reload
 
-
+sudo mkdir /data/
+sudo mkdir /data/moneytracker
+sudo mkdir /data/moneytracker/static
+sudo mkdir /data/moneytracker/media
