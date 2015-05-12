@@ -1,9 +1,10 @@
-from django.db import models
+from django.contrib.gis.db import models
 from django.utils import timezone
 
 class Category(models.Model):
     name = models.CharField(blank=True, default=u'', max_length=255)
-    sub_category = models.ForeignKey('self', blank=True, null=True)
+
+    objects = models.GeoManager()
 
 class Note(models.Model):
     """
@@ -11,11 +12,23 @@ class Note(models.Model):
     """
     timestamp = models.DateTimeField('date taken')
     name = models.CharField(max_length=255)
-    description = models.TextField()
+    description = models.TextField(blank=True, default=u'')
+
+    objects = models.GeoManager()
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.timestamp = now()
+            self.timestamp = timezone.now()
+        super(Note, self).save(*args, **kwargs)
+
+
+class Place(models.Model):
+    name = models.CharField(max_length=255)
+    location = models.PointField(blank=True, null=True)
+    notes = models.ManyToManyField(Note)
+    categories = models.ManyToManyField(Category)
+
+    objects = models.GeoManager()
 
 class Spending(models.Model):
     timestamp = models.DateTimeField('date published')
@@ -23,15 +36,12 @@ class Spending(models.Model):
     description = models.TextField(blank=True, default=u'')
     receipt = models.ImageField(blank=True, null=True) #upload_to=None
     receipt_text = models.TextField(blank=True, default=u'') #Populated via OCR
+    place = models.ForeignKey(Place, blank=True, null=True)
+
+    objects = models.GeoManager()
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.timestamp = now()
-
-class Place(models.Model):
-    name = models.CharField(max_length=255)
-    #TODO: add GIS data types
-    spent = models.ForeignKey(Spending)
-    notes = models.ManyToManyField(Note)
-    categories = models.ManyToManyField(Category)
+            self.timestamp = timezone.now()
+        super(Spending, self).save(*args, **kwargs)
 
