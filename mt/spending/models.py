@@ -6,6 +6,9 @@ class Category(models.Model):
 
     objects = models.GeoManager()
 
+    def __str__(self):
+        return "%s" % self.name
+
 class Note(models.Model):
     """
     Note about something, like a place you ate at
@@ -21,6 +24,8 @@ class Note(models.Model):
             self.timestamp = timezone.now()
         super(Note, self).save(*args, **kwargs)
 
+    def __str__(self):
+        return "%s" % self.name
 
 class Place(models.Model):
     name = models.CharField(max_length=255)
@@ -29,6 +34,9 @@ class Place(models.Model):
     categories = models.ManyToManyField(Category)
 
     objects = models.GeoManager()
+
+    def __str__(self):
+        return "%s" % self.name
 
 class Spending(models.Model):
     timestamp = models.DateTimeField('date published')
@@ -44,4 +52,8 @@ class Spending(models.Model):
         if not self.id:
             self.timestamp = timezone.now()
         super(Spending, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return "%s" % self.amount
+
 

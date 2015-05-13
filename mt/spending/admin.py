@@ -1,6 +1,3 @@
-#from django.contrib import admin
-
-
 from django.contrib.gis import admin
 
 from spending.models import Category, Note, Spending, Place
