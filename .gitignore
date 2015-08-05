@@ -3,3 +3,4 @@ mt/db.sqlite3
 *.swp
 *.pyc
 env
+resources
