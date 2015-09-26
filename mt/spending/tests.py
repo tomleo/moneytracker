@@ -78,13 +78,57 @@ class TestNote(APITestCase):
         self.assertEqual(models.Note.objects.count(), 2)
 
 
-class TestPlace(APITestCase):
+class BaseCaseMixin(object):
+
+    def setUp(self):
+        self.password = 'asdf'
+        self.user = factories.UserFactory.create()
+        self.list_url = self.get_list_url()
+        self.post_url = self.get_post_url()
+
+    def get_list_url(self):
+        return reverse(self.list_url_name)
+
+    def get_post_url(self):
+        return reverse(self.post_url_name)
+
+    def _login(self):
+        return self.client.login(username=self.user.username, password=self.password)
+
+
+class TestPlace(BaseCaseMixin, APITestCase):
+
+    def setUp(self):
+        self.list_url_name = 'list-place'
+        self.post_url_name = 'add-place'
+        super(TestPlace, self).setUp()
+
+    def _make_place_data(self):
+        note1 = factories.NoteFactory.create()
+        note2 = factories.NoteFactory.create()
+        cate1 = factories.CategoryFactory.create()
+        cate2 = factories.CategoryFactory.create()
+        return {'notes': [note1.id, note2.id], 'categories': [cate1.id, cate2.id]}
 
     def test_add_place(self):
-        pass
+        self._login()
+        _place = self._make_place_data()
+        data = {
+            'name': 'The Zoo',
+            'notes': _place['notes'],
+            'categories': _place['categories']
+        }
+        self.assertEqual(models.Place.objects.count(), 0)
+        response = self.client.post(self.post_url, data=data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(models.Place.objects.count(), 1)
 
     def test_list_place(self):
-        pass
+        factories.PlaceFactory.create()
+        self._login()
+        response = self.client.get(self.list_url, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(models.Place.objects.count(), 1)
 
 
 class TestSpending(APITestCase):
