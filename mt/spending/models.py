@@ -15,7 +15,7 @@ class Note(models.Model):
     """
     Note about something, like a place you ate at
     """
-    timestamp = models.DateTimeField('date taken')
+    timestamp = models.DateTimeField('date taken', blank=True, null=True)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, default=u'')
 

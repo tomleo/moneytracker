@@ -1,7 +1,11 @@
 from django.contrib.auth.models import User
+from django.utils import timezone
 import factory
+from faker import Factory as FakerFactory
 
 from . import models
+
+faker = FakerFactory.create()
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -27,3 +31,12 @@ class CategoryFactory(factory.django.DjangoModelFactory):
         model = models.Category
 
     name = 'Cats'
+
+
+class NoteFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Note
+
+    timestamp = timezone.now()
+    name = factory.LazyAttribute(lambda x: faker.name())
+    description = factory.LazyAttribute(lambda x: faker.text())
