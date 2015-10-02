@@ -1,6 +1,7 @@
 from django.contrib.gis.db import models
 from django.utils import timezone
 
+
 class Category(models.Model):
     name = models.CharField(blank=True, default=u'', max_length=255)
 
@@ -9,11 +10,12 @@ class Category(models.Model):
     def __str__(self):
         return "%s" % self.name
 
+
 class Note(models.Model):
     """
     Note about something, like a place you ate at
     """
-    timestamp = models.DateTimeField('date taken')
+    timestamp = models.DateTimeField('date taken', blank=True, null=True)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, default=u'')
 
@@ -27,6 +29,7 @@ class Note(models.Model):
     def __str__(self):
         return "%s" % self.name
 
+
 class Place(models.Model):
     name = models.CharField(max_length=255)
     location = models.PointField(blank=True, null=True)
@@ -38,12 +41,13 @@ class Place(models.Model):
     def __str__(self):
         return "%s" % self.name
 
+
 class Spending(models.Model):
     timestamp = models.DateTimeField('date published')
     amount = models.DecimalField(max_digits=19, decimal_places=4)
     description = models.TextField(blank=True, default=u'')
-    receipt = models.ImageField(blank=True, null=True) #upload_to=None
-    receipt_text = models.TextField(blank=True, default=u'') #Populated via OCR
+    receipt = models.ImageField(blank=True, null=True)  # upload_to=None
+    receipt_text = models.TextField(blank=True, default=u'')  # Populated via OCR
     place = models.ForeignKey(Place, blank=True, null=True)
 
     objects = models.GeoManager()
@@ -55,5 +59,3 @@ class Spending(models.Model):
 
     def __str__(self):
         return "%s" % self.amount
-
-
