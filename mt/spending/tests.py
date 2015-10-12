@@ -133,7 +133,7 @@ class TestSpending(BaseCaseMixin, APITestCase):
         super(TestSpending, self).setUp()
 
     def test_add_spending(self):
-        pass
+        self._login()
 
     def test_list_spending(self):
-        pass
+        factories.SpendingFactory.create()

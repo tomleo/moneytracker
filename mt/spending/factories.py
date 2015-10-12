@@ -1,11 +1,22 @@
+import random
+
 from django.contrib.auth.models import User
+from django.contrib.gis.geos import Point
 from django.utils import timezone
 import factory
+from factory.fuzzy import BaseFuzzyAttribute
 from faker import Factory as FakerFactory
+
 
 from . import models
 
 faker = FakerFactory.create()
+
+
+class FuzzyPoint(BaseFuzzyAttribute):
+    def fuzz(self):
+        return Point(random.uniform(-180.0, 180.0),
+                     random.uniform(-90.0, 90.0))
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -47,8 +58,7 @@ class PlaceFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Place
     name = factory.LazyAttribute(lambda x: faker.name())
-
-    # TODO: location: not sure how to store locations (they apear as binary blobs)
+    location = FuzzyPoint()
 
     @factory.post_generation
     def notes(self, create, extracted, **kwargs):
@@ -69,3 +79,12 @@ class PlaceFactory(factory.django.DjangoModelFactory):
             # A list of groups were passed in, use them
             for category in extracted:
                 self.notes.add(category)
+
+class SpendingFactory(factory.django.DjangoModelFactory):
+
+    class Meta:
+        model = models.Spending
+    amount = factory.LazyAttribute(lambda x: random.randint(1,1000) + random.randint(0,99) / 100.0)
+    description = factory.LazyAttribute(lambda x: faker.text())
+    receipt_text = factory.LazyAttribute(lambda x: faker.text())
+    place = factory.SubFactory(PlaceFactory)

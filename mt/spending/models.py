@@ -47,7 +47,8 @@ class Spending(models.Model):
     amount = models.DecimalField(max_digits=19, decimal_places=4)
     description = models.TextField(blank=True, default=u'')
     receipt = models.ImageField(blank=True, null=True)  # upload_to=None
-    receipt_text = models.TextField(blank=True, default=u'')  # Populated via OCR
+    receipt_text = models.TextField(blank=True,
+                                    default=u'')  # Populated via OCR
     place = models.ForeignKey(Place, blank=True, null=True)
 
     objects = models.GeoManager()
