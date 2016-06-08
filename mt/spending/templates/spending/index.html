@@ -1,10 +1,20 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-    <title>Skiooo</title>
+    <meta charset="utf-8">
+    <title>Money Tracker</title>
+    <meta name="description" content="">
 </head>
 <body>
-    <h1>MoneyTracker</h1>
-    <p>Coming Soon</p>
+<h1>MoneyTracker</h1>
+
+{% include 'spending/jquery.html' %}
+{% include 'spending/underscore.html' %}
+{% include 'spending/backbone.html' %}
+
+{% static 'js/collections/spending.js' %}
+{% static 'js/models/spending.js' %}
+{% static 'js/views/spending.js' %}
+
 </body>
 </html>
