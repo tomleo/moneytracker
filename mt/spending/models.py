@@ -1,5 +1,6 @@
 from django.contrib.gis.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 class Category(models.Model):
@@ -18,6 +19,7 @@ class Note(models.Model):
     timestamp = models.DateTimeField('date taken', blank=True, null=True)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, default=u'')
+    user = models.ForeignKey(User)
 
     objects = models.GeoManager()
 
@@ -50,6 +52,7 @@ class Spending(models.Model):
     receipt_text = models.TextField(blank=True,
                                     default=u'')  # Populated via OCR
     place = models.ForeignKey(Place, blank=True, null=True)
+    user = models.ForeignKey(User)
 
     objects = models.GeoManager()
 
