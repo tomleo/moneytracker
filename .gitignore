@@ -4,3 +4,4 @@ mt/db.sqlite3
 *.pyc
 env
 resources
+/moneytracker.sublime-workspace

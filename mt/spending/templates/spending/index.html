@@ -1,20 +1,43 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Money Tracker</title>
-    <meta name="description" content="">
-</head>
-<body>
-<h1>MoneyTracker</h1>
+{% extends 'mt/base.html' %}
 
-{% include 'spending/jquery.html' %}
-{% include 'spending/underscore.html' %}
-{% include 'spending/backbone.html' %}
-
+{% block main %}
+{% comment %}
 {% static 'js/collections/spending.js' %}
 {% static 'js/models/spending.js' %}
 {% static 'js/views/spending.js' %}
+{% endcomment %}
 
-</body>
-</html>
+<h2>Add</h2>
+<ul>
+	<li>
+		<a href="{% url 'add-category' %}">Add Category</a>
+	</li>
+	<li>
+		<a href="{% url 'add-note' %}">Add Note</a>
+	</li>
+	<li>
+		<a href="{% url 'add-place' %}">Add Place</a>
+	</li>
+	<li>
+		<a href="{% url 'add-spending' %}">Add Spending</a>
+	</li>
+</ul>
+
+<h2>List</h2>
+<ul>
+
+	<li>
+		<a href="{% url 'list-category' %}">List Category</a>
+	</li>
+	<li>
+		<a href="{% url 'list-note' %}">List Note</a>
+	</li>
+	<li>
+		<a href="{% url 'list-place' %}">List Place</a>
+	</li>
+	<li>
+		<a href="{% url 'list-spending' %}">List Spending</a>
+	</li>
+</ul>
+
+{% endblock %}
