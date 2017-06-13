@@ -1,5 +1,15 @@
 {% extends 'mt/base.html' %}
 
+{% block head %}
+
+<style>
+#map {
+    height: 400px;
+    width: 100%;
+}
+</style>
+{% endblock %}
+
 {% block main %}
 {% comment %}
 {% static 'js/collections/spending.js' %}
@@ -8,36 +18,86 @@
 {% endcomment %}
 
 <h2>Add</h2>
-<ul>
+<ul id="add-list">
 	<li>
-		<a href="{% url 'add-category' %}">Add Category</a>
+		<a id="add-category" href="{% url 'add-category' %}">Add Category</a>
 	</li>
 	<li>
-		<a href="{% url 'add-note' %}">Add Note</a>
+		<a id="add-note" href="{% url 'add-note' %}">Add Note</a>
 	</li>
 	<li>
-		<a href="{% url 'add-place' %}">Add Place</a>
+		<a id="add-place" href="{% url 'add-place' %}">Add Place</a>
 	</li>
 	<li>
-		<a href="{% url 'add-spending' %}">Add Spending</a>
+		<a id="add-spending" href="{% url 'add-spending' %}">Add Spending</a>
 	</li>
 </ul>
 
 <h2>List</h2>
-<ul>
-
+<ul id="list-list">
 	<li>
-		<a href="{% url 'list-category' %}">List Category</a>
+		<a id="list-category" href="{% url 'list-category' %}">List Category</a>
 	</li>
 	<li>
-		<a href="{% url 'list-note' %}">List Note</a>
+		<a id="list-note" href="{% url 'list-note' %}">List Note</a>
 	</li>
 	<li>
-		<a href="{% url 'list-place' %}">List Place</a>
+		<a id="list-place" href="{% url 'list-place' %}">List Place</a>
 	</li>
 	<li>
-		<a href="{% url 'list-spending' %}">List Spending</a>
+		<a id="list-spending" href="{% url 'list-spending' %}">List Spending</a>
 	</li>
 </ul>
 
+<h2>GeoStuff :/</h2>
+<button id="get-geo-location">Get Geo Location</button>
+<div id="map"></div>
+
+{% endblock %}
+
+{% block js %}
+{{ block.super }}
+
+<script>
+function initMap() {
+}
+
+$('#get-geo-location').on('click', function(e) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        console.log("Lat " + position.coords.latitude);
+        console.log("Lng " + position.coords.longitude);
+        var position = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+        };
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 20,
+            center: position
+        });
+        var marker = new google.maps.Marker({
+            position: position,
+            map: map
+        });
+    });
+});
+
+$('#add-list').on('click', function(e) {
+	e.preventDefaults();
+	console.log("TODO add stuff");
+});
+
+$('#list-list').on('click', function(e) {
+	e.preventDefaults();
+	console.log("TODO click stuff");
+})
+
+
+</script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvVHQ8l3FnP9EpbZEktdh7uwGtw2dTziE&callback=initMap">
+</script>
+
+<script>
+
+</script>
 {% endblock %}
