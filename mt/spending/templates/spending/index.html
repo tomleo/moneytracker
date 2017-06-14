@@ -11,93 +11,154 @@
 {% endblock %}
 
 {% block main %}
-{% comment %}
-{% static 'js/collections/spending.js' %}
-{% static 'js/models/spending.js' %}
-{% static 'js/views/spending.js' %}
-{% endcomment %}
+<div id="log-spending-page"></div>
+<div id="log-place-page"></div>
+<div id="log-note-page"></div>
+<div id="log-category-page"></div>
 
-<h2>Add</h2>
-<ul id="add-list">
-	<li>
-		<a id="add-category" href="{% url 'add-category' %}">Add Category</a>
-	</li>
-	<li>
-		<a id="add-note" href="{% url 'add-note' %}">Add Note</a>
-	</li>
-	<li>
-		<a id="add-place" href="{% url 'add-place' %}">Add Place</a>
-	</li>
-	<li>
-		<a id="add-spending" href="{% url 'add-spending' %}">Add Spending</a>
-	</li>
+<ul class="add-links">
+    <li>
+        <a href="#log-place-page">Add Place</a>
+    </li>
 </ul>
-
-<h2>List</h2>
-<ul id="list-list">
-	<li>
-		<a id="list-category" href="{% url 'list-category' %}">List Category</a>
-	</li>
-	<li>
-		<a id="list-note" href="{% url 'list-note' %}">List Note</a>
-	</li>
-	<li>
-		<a id="list-place" href="{% url 'list-place' %}">List Place</a>
-	</li>
-	<li>
-		<a id="list-spending" href="{% url 'list-spending' %}">List Spending</a>
-	</li>
-</ul>
-
-<h2>GeoStuff :/</h2>
-<button id="get-geo-location">Get Geo Location</button>
-<div id="map"></div>
 
 {% endblock %}
 
 {% block js %}
 {{ block.super }}
 
+
+
+<script type="text/html" id="tmpl-add-spending-form">
+    <form id="add-spending">
+        <input id="id_timestamp" name="timestamp" type="datetime-local">
+        <input id="id_amount" name="amount" type="number" placeholder="1.0" step="0.01" min="0">
+        <textarea id="id_description" name="description"></textarea>
+        <input id="id_receipt" name="receipt" type="file">
+        <textarea id="id_receipt_text" name="receipt_text"></textarea>
+        <input id="id_place" name="place" type="hidden">
+    </form>
+</script>
+
+<script type="text/html" id="tmpl-add-place-form">
+    <form id="add-place">
+        <input id="id_name" name="name" type="text">
+        <div id="map"></div>
+        <input id="id_lat" name="lat" type="hidden" value="">
+        <input id="id_lng" name="lng" type="hidden" value="">
+        <input id="id_notes" name="notes" type="hidden">
+        <input id="id_categories" name="categories" type="hidden">
+    </form>
+</script>
+
+<script type="text/html" id="tmpl-note-form">
+    <form id="add-note">
+        <input id="id_timestamp" name="timestamp" type="datetime-local">
+        <input id="id_name" name="name" type="text">
+        <textarea id="id_description" name="description"></textarea>
+    </form>
+</script>
+
+<script type="text/html" id="tmpl-category-form">
+    <form id="add-category">
+        <input id="id_name" name="name" type="text">
+    </form>
+</script>
+
 <script>
-function initMap() {
+
+var app = window.app = {
+    url: {
+        add: {
+            category: "{% url 'add-category' %}",
+            note: "{% url 'add-note' %}",
+            place: "{% url 'add-place' %}",
+            spending: "{% url 'add-spending' %}"
+        },
+        list: {
+            category: "{% url 'list-category' %}",
+            note: "{% url 'list-note' %}",
+            place: "{% url 'list-place' %}",
+            spending: "{% url 'list-spending' %}"
+        }
+    },
+    templates: {
+        add_spending_form: $('#tmpl-add-spending-form').html(),
+        add_place_form: $('#tmpl-add-place-form').html(),
+        add_note_form: $('#tmpl-note-form').html(),
+        add_category_form: $('#tmpl-category-form').html(),
+    },
+    pages: {
+        $spending: $('log-spending-page'),
+        $place: $('log-place-page'),
+        $note: $('log-note-page'),
+        $category: $('log-category-page')
+    },
+    map: {
+        selector: ['#map'],
+        map: undefined,
+        markers: []
+    },
+    loaded: {
+        doc: false,
+        map: false
+    }
 }
+
+$('.add-links li').on('click', 'a', function(e) {
+    e.preventDefault();
+    let page_name = $(this).attr('href').split('-')[1];
+    let tmpl = app.templates['add_'+page_name+'_form'];
+    let page = app.pages['$'+page_name];
+
+    debugger;
+    console.log(tmpl);
+    page.html(tmpl);
+    console.log(page);
+});
+
+function initMap(position) {
+    app.map.map = new google.maps.Map(document.querySelector(app.map.selector[0]), {
+        zoom: 20,
+        center: position
+    });
+    app.map.markers.push(new google.maps.Marker({
+            position: position,
+            map: map
+        })
+    );
+}
+
+function google_maps_ready(e) {
+    app.loaded.map = true;
+    $(document).trigger('loaded:map');
+}
+
+$(document).ready(function() {
+    app.loaded.doc = true;
+    $(document).trigger('loaded:doc');
+});
+
 
 $('#get-geo-location').on('click', function(e) {
     navigator.geolocation.getCurrentPosition(function(position) {
-        console.log("Lat " + position.coords.latitude);
-        console.log("Lng " + position.coords.longitude);
         var position = {
             lat: position.coords.latitude,
             lng: position.coords.longitude
         };
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 20,
-            center: position
-        });
-        var marker = new google.maps.Marker({
-            position: position,
-            map: map
-        });
     });
 });
 
-$('#add-list').on('click', function(e) {
-	e.preventDefaults();
-	console.log("TODO add stuff");
-});
+// $('#add-list').on('click', function(e) {
+// 	e.preventDefaults();
+// 	console.log("TODO add stuff");
+// });
 
-$('#list-list').on('click', function(e) {
-	e.preventDefaults();
-	console.log("TODO click stuff");
-})
-
-
+// $('#list-list').on('click', function(e) {
+// 	e.preventDefaults();
+// 	console.log("TODO click stuff");
+// })
 </script>
-<script async defer
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvVHQ8l3FnP9EpbZEktdh7uwGtw2dTziE&callback=initMap">
-</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvVHQ8l3FnP9EpbZEktdh7uwGtw2dTziE&callback=google_maps_ready"></script>
 
-<script>
-
-</script>
 {% endblock %}
