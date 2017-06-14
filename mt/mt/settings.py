@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'whitenoise.runserver_nostatic',
     'rest_framework',
-    'rest_framework_gis',
     'spending',
 ]
 
