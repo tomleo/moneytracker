@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Money Tracker</title>
+    <meta name="description" content="Track your spending habits">
+    {% block head %}{% endblock %}
+</head>
+<body>
+<h1>MoneyTracker</h1>
+
+{% block main %}{% endblock %}
+
+{% block libs %}
+{% include 'spending/jquery.html' %}
+{% include 'spending/underscore.html' %}
+{% include 'spending/backbone.html' %}
+{% endblock %}
+
+{% block js %}{% endblock %}
+
+</body>
+</html>
