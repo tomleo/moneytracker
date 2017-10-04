@@ -3,3 +3,4 @@ djangorestframework==3.6.4
 factory-boy==2.9.2
 fake-factory==9999.9.9
 Pillow==4.3.0
+whitenoise==3.3.1
