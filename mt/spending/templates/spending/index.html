@@ -1,20 +1,20 @@
+{% load static from staticfiles %}
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <title>Money Tracker</title>
-    <meta name="description" content="">
+    <meta name="description" content="Track your spending on your own server">
 </head>
 <body>
 <h1>MoneyTracker</h1>
 
-{% include 'spending/jquery.html' %}
-{% include 'spending/underscore.html' %}
-{% include 'spending/backbone.html' %}
-
-{% static 'js/collections/spending.js' %}
-{% static 'js/models/spending.js' %}
-{% static 'js/views/spending.js' %}
+{# include 'spending/jquery.html' #}
+{# include 'spending/underscore.html' #}
+{# include 'spending/backbone.html' #}
+{# static 'js/collections/spending.js' #}
+{# static 'js/models/spending.js' #}
+{# static 'js/views/spending.js' #}
 
 </body>
 </html>

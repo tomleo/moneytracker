@@ -8,9 +8,9 @@ class BudgetLog(models.Model):
     """
     Money allocation towards an item
     """
-    date = models.DateTimeField()
-    amount = models.DecialField(max_digits=11, decimal_places=2)
-    category = models.ForeignKey('spending.models.Category', blank=True, null=True)
+    timestamp = models.DateTimeField()
+    amount = models.DecimalField(max_digits=11, decimal_places=2)
+    category = models.ForeignKey('spending.Category', blank=True, null=True)
 
     def __str__(self):
         amount = "%s" % (self.amount)
@@ -38,8 +38,8 @@ class BudgetItem(models.Model):
     updated = models.DateTimeField()
     name = models.CharField(max_length=255)
     rate = models.CharField(max_length=65, choices=RATE_CHOICES)
-    amount = models.DecialField(max_length=11, decimal_places=2)
-    logs = models.ManyToManyFeidl(BudgetLog)
+    amount = models.DecimalField(max_digits=11, decimal_places=2)
+    logs = models.ManyToManyField(BudgetLog)
     user = models.ForeignKey(User)
 
     def __str__(self):
@@ -53,4 +53,3 @@ class BudgetItem(models.Model):
 
     def get_rate_name(self):
         return dict(self.RATE_CHOICES).get(self.rate, '')
-
