@@ -36,10 +36,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.gis',
+    # 'django.contrib.gis',
     'whitenoise.runserver_nostatic',
     'rest_framework',
     'spending',
+    'budget'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -79,14 +80,15 @@ WSGI_APPLICATION = 'mt.wsgi.application'
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         # 'ENGINE': 'django.contrib.gis.db.backends.spatialite',
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'moneytracker',
-        'USER': 'postgres',
-        'PASSWORD': 'thomas',
-        'HOST': '127.0.0.1',
-        'PORT': '5432'
+        # 'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        # 'NAME': 'moneytracker',
+        # 'USER': 'postgres',
+        # 'PASSWORD': 'thomas',
+        # 'HOST': '127.0.0.1',
+        # 'PORT': '5432'
     }
 }
 

@@ -1,7 +1,7 @@
 import random
 
 from django.contrib.auth.models import User
-from django.contrib.gis.geos import Point
+# from django.contrib.gis.geos import Point
 from django.utils import timezone
 import factory
 from factory.fuzzy import BaseFuzzyAttribute
@@ -13,10 +13,10 @@ from . import models
 faker = FakerFactory.create()
 
 
-class FuzzyPoint(BaseFuzzyAttribute):
-    def fuzz(self):
-        return Point(random.uniform(-180.0, 180.0),
-                     random.uniform(-90.0, 90.0))
+# class FuzzyPoint(BaseFuzzyAttribute):
+#     def fuzz(self):
+#         return Point(random.uniform(-180.0, 180.0),
+#                      random.uniform(-90.0, 90.0))
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -58,7 +58,7 @@ class PlaceFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Place
     name = factory.LazyAttribute(lambda x: faker.name())
-    location = FuzzyPoint()
+    # location = FuzzyPoint()
 
     @factory.post_generation
     def notes(self, create, extracted, **kwargs):

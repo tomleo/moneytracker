@@ -1,13 +1,14 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from drf_extra_fields.geo_fields import PointField
 
 from . import models
+
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields = ['url', 'username', 'email', 'is_staff']
+
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,11 +24,10 @@ class NoteSerializer(serializers.ModelSerializer):
 
 class PlaceSerializer(serializers.ModelSerializer):
 
-    location = PointField()
-
     class Meta:
         model = models.Place
-        fields = ['name', 'location', 'notes', 'categories']
+        fields = ['name', 'lat', 'lng', 'notes', 'categories']
+
 
 class SpendingSerializer(serializers.ModelSerializer):
     class Meta:
