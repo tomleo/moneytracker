@@ -1,4 +1,0 @@
-virtualenv_user: vagrant
-virtualenv_group: vagrant
-virtualenv_path: /home/vagrant/moneytracker/venv
-virtualenv_requirements_file: /home/vagrant/moneytracker/requirements.txt

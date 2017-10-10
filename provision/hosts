@@ -1,8 +1,0 @@
-[webservers]
-192.168.77.21
-
-[dbservers]
-192.168.77.21
-
-[memcachedservers]
-192.168.77.21
