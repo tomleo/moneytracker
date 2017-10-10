@@ -1,0 +1,17 @@
+{% load static from staticfiles %}
+<!doctype html>
+<html
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+    {% block html_head %}{% endblock %}
+</head>
+<body>
+    <div class="container-fluid">
+        {% block container_content %}{% endblock %}
+    </div>
+    {% block html_body_bottom %}{% endblock %}
+</body>
+</html>

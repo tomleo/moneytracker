@@ -1,0 +1,14 @@
+Custom Version of Bootstrap Generated Here:
+http://getbootstrap.com/customize/?id=de23a880a1219121fbc2
+- Latter change the default color scheme
+
+
+Look into this:
+http://fideloper.github.io/Vaprobash/install-scripts.html#screen
+
+
+Show Downloads in Progress
+https://django-downloadview.readthedocs.org/en/1.6/
+
+For Places:
+https://github.com/caioariede/django-location-field/

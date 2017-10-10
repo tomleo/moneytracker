@@ -1,0 +1,123 @@
+[
+{
+    "fields": {
+        "name": "Income"
+    },
+    "pk": 2,
+    "model": "spending.category"
+},
+{
+    "fields": {
+        "name": "Budget"
+    },
+    "pk": 3,
+    "model": "spending.category"
+},
+{
+    "fields": {
+        "name": "Savings"
+    },
+    "pk": 4,
+    "model": "spending.category"
+},
+{
+    "fields": {
+        "name": "Car Insurance",
+        "slug": "car-insurance",
+        "timestamp": "2014-08-19T22:43:38Z",
+        "description": ""
+    },
+    "pk": 1,
+    "model": "spending.tag"
+},
+{
+    "fields": {
+        "name": "Loan Payment",
+        "slug": "loan-payment",
+        "timestamp": "2014-08-19T22:43:56Z",
+        "description": ""
+    },
+    "pk": 2,
+    "model": "spending.tag"
+},
+{
+    "fields": {
+        "name": "Rent",
+        "slug": "rent",
+        "timestamp": "2014-08-19T22:44:06Z",
+        "description": ""
+    },
+    "pk": 3,
+    "model": "spending.tag"
+},
+{
+    "fields": {
+        "name": "Utilities",
+        "slug": "utilities",
+        "timestamp": "2014-08-19T22:44:18Z",
+        "description": ""
+    },
+    "pk": 4,
+    "model": "spending.tag"
+},
+{
+    "fields": {
+        "name": "Subway Pass",
+        "slug": "subway-pass",
+        "timestamp": "2014-08-19T22:44:31Z",
+        "description": ""
+    },
+    "pk": 5,
+    "model": "spending.tag"
+},
+{
+    "fields": {
+        "name": "Gas",
+        "slug": "gas",
+        "timestamp": "2014-08-19T22:44:42Z",
+        "description": ""
+    },
+    "pk": 6,
+    "model": "spending.tag"
+},
+{
+    "fields": {
+        "name": "Grocery Shopping",
+        "slug": "grocery-shopping",
+        "timestamp": "2014-08-19T22:45:19Z",
+        "description": ""
+    },
+    "pk": 7,
+    "model": "spending.tag"
+},
+{
+    "fields": {
+        "name": "Redline",
+        "slug": "redline",
+        "timestamp": "2014-08-19T22:45:33Z",
+        "description": ""
+    },
+    "pk": 8,
+    "model": "spending.tag"
+},
+{
+    "fields": {
+        "name": "Rackspace",
+        "slug": "rackspace",
+        "timestamp": "2014-08-19T22:45:51Z",
+        "description": ""
+    },
+    "pk": 9,
+    "model": "spending.tag"
+},
+{
+    "fields": {
+        "name": "A Small Orange",
+        "slug": "a-small-orange",
+        "timestamp": "2014-08-19T22:46:08Z",
+        "description": ""
+    },
+    "pk": 10,
+    "model": "spending.tag"
+}
+]

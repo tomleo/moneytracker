@@ -1,7 +1,10 @@
 venv
 mt/db.sqlite3
 *.swp
+*.swo
 *.pyc
 env
 resources
 /moneytracker.sublime-workspace
+db_settings.json
+debug.log

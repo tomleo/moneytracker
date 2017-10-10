@@ -1,0 +1,19 @@
+- name: Install Virtualenv
+  pip: name=virtualenv
+  sudo: yes
+
+- name: Create folder for virtualenv
+  file: state=directory owner={{ virtualenv_user }} group={{ virtualenv_group }} path={{ virtualenv_requirements_file }}
+
+- name: Check whether virtualenv exists
+  stat: path="{{ virtualenv_path }}/bin/activate"
+  register: virtualenv_activate
+
+- name: Create the virtualenv
+  command: virtualenv {{ virtualenv_path }}
+  when: virtualenv_activate.stat.exists != true
+
+- name: Install requirements
+  pip: requirements={{ virtualenv_requirements_file }} virtualenv={{ virtualenv_path }}
+  when: virtualenv_requirements_file is defined
+
