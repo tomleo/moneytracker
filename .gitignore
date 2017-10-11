@@ -8,3 +8,4 @@ resources
 /moneytracker.sublime-workspace
 db_settings.json
 debug.log
+/mt.log
