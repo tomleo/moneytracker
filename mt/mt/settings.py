@@ -1,38 +1,23 @@
-
-For more information on this file, see
-https://docs.djangoproject.com/en/1.8/topics/settings/
-
-For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.8/ref/settings/
-"""
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-import json
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ROOT = os.path.realpath(os.path.abspath(os.path.join(BASE_DIR, '../')))
-DB_CONFIG_FILE = os.path.realpath(os.path.abspath(os.path.join(ROOT, './db_settings.json')))
+import cson
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # moneytracker/mt
+ROOT = os.path.realpath(os.path.abspath(os.path.join(BASE_DIR, '../'))) # moneytracker/
+
+ext_settings_file = os.environ.get('ext_settings_file', 'ext_settings.cson')
+CONFIG_FILE = os.path.join(ROOT, ext_settings_file) # moneytracker/ext_settings.cson
+
 try:
-    with open(DB_CONFIG_FILE) as f:
-        db_settings = json.loads(f.read())
+    with open(CONFIG_FILE) as f:
+        ext = cson.loads(f.read())
 except IOError:
-    db_settings = {}
+    ext = {}
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'ewtt59761z(t6jn+)l_ldy-q&2qma=8d!=!z!ds45d(d^9z(ya'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = ext.get('secret_key')
+DEBUG = ext.get('debug', False)
 
 ALLOWED_HOSTS = []
 
-
-# Application definition
-
+# May add back at later time: 'django.contrib.gis'
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,7 +25,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'django.contrib.gis',
     'whitenoise.runserver_nostatic',
     'rest_framework',
     'spending',
@@ -81,35 +65,24 @@ WSGI_APPLICATION = 'mt.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        # 'ENGINE': 'django.contrib.gis.db.backends.spatialite',
-        # 'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        # 'NAME': 'moneytracker',
-        # 'USER': 'postgres',
-        # 'PASSWORD': 'thomas',
-        # 'HOST': '127.0.0.1',
-        # 'PORT': '5432'
-    }
-}
-
-DATABASES = {
-    'default': {
-        'ENGINE': db_settings.get('engine'),
-        'NAME': db_settings.get('name'),
-        'USER': db_settings.get('user'),
-        'PASSWORD': db_settings.get('password'),
-        'HOST': db_settings.get('host'),
-        'PORT': db_settings.get('post'),
-    }
-}
+# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
+DATABASES = {}
+DATABASES['default'] = {}
+DATABASES['default']['ENGINE'] = ext.get('engine', 'django.db.backends.sqlite3')
+if DATABASES['default']['ENGINE'] == 'django.db.backends.sqlite3':
+    DATABASES['default']['NAME'] = os.path.join(BASE_DIR, 'db.sqlite3')
+else:
+    DATABASES['default']['NAME'] = ext.get('name')
+DATABASES['default'].update({
+    'USER': ext.get('user', None),
+    'PASSWORD': ext.get('password', None),
+    'HOST': ext.get('host', None),
+    'PORT': ext.get('post', None),
+})
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/1.8/topics/i18n/
+# https://docs.djangoproject.com/en/1.11/topics/i18n/
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
@@ -117,9 +90,12 @@ USE_L10N = True
 USE_TZ = True
 
 
+# https://docs.djangoproject.com/en/1.11/howto/static-files/
 # Static files (CSS, JavaScript, Images)
-STATIC_ROOT = '/data/moneytraker/static/'
-STATIC_URL = '/data/moneytraker/static/'
+STATIC_ROOT = ext.get('static_root', os.path.join(BASE_DIR, 'staticfiles'))
+STATIC_URL = ext.get('static_url', '/static/')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 LOGGING = {
     'version': 1,
@@ -128,7 +104,7 @@ LOGGING = {
          'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': '/var/log/moneytraker/django_debug.log',
+            'filename': ext.get('log_file', os.path.join(ROOT, 'mt.log'))
         },
     },
     'loggers': {
@@ -140,8 +116,6 @@ LOGGING = {
     }
 }
 
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
-STATIC_URL = '/static/'
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
@@ -149,6 +123,3 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated'
     ]
 }
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

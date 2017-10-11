@@ -1,0 +1,32 @@
+# Engine Options
+# - django.db.backends.postgresql_psycopg2
+# - django.contrib.gis.db.backends.postgis
+# - django.db.backends.sqlite3
+# If sqlite3, the 'NAME' will be os.path.join(BASE_DIR, 'db.sqlite3')
+#
+# Config options
+# {
+#     "engine": "django.db.backends.postgresql_psycopg2",
+#     "name": "mt",
+#     "user": "dev",
+#     "password": "dev",
+#     "host": "127.0.0.1",
+#     "port": "5432",
+#     "secret_key": "asdf",
+#     "debug": false,
+#     "static_root":  "/http/static/folder",
+#     "static_url": "/static/",
+#     "log_file": "/var/log/mt.log"
+# }
+{
+    # "engine": "django.db.backends.postgresql_psycopg2",
+    "engine": "django.db.backends.sqlite3",
+    "name": "moneytraker",
+    "user": "dev",
+    "password": "dev",
+    "host": "127.0.0.1",
+    "port": "5432",
+    "secret_key": "asdf",
+    "debug": true,
+    "static_url": "/static/",
+}

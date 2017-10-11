@@ -1,8 +1,0 @@
-{
-    "engine": "django.db.backends.postgresql_psycopg2",
-    "name": "moneytraker",
-    "user": "vagrant",
-    "password": "thomas",
-    "host": "127.0.0.1",
-    "posrt": "5432"
-}
