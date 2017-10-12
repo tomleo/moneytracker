@@ -16,8 +16,7 @@ except IOError:
 
 SECRET_KEY = ext.get('secret_key')
 DEBUG = ext.get('debug', False)
-
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ext.get('allowed_hosts', [])
 
 # May add back at later time: 'django.contrib.gis'
 INSTALLED_APPS = [

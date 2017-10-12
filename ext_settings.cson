@@ -18,14 +18,13 @@
 #     "static_url": "/static/",
 #     "log_file": "/var/log/mt.log"
 # }
+#
+# Generate Secure Password
+# echo $(python -c 'import random; import string; print("".join([random.SystemRandom().choice("{}{}{}".format(string.ascii_letters, string.digits, string.punctuation)) for i in range(50)]))')
+
 {
     # "engine": "django.db.backends.postgresql_psycopg2",
     "engine": "django.db.backends.sqlite3",
-    "name": "moneytraker",
-    "user": "dev",
-    "password": "dev",
-    "host": "127.0.0.1",
-    "port": "5432",
     "secret_key": "asdf",
     "debug": true,
     "static_url": "/static/",

@@ -8,3 +8,4 @@ pytz==2017.2
 psycopg2==2.7.1
 brotlipy==0.7.0
 gunicorn==19.7.1
+cson==0.7
