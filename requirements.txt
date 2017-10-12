@@ -6,3 +6,5 @@ Pillow==4.3.0
 whitenoise==3.3.1
 pytz==2017.2
 psycopg2==2.7.1
+brotlipy==0.7.0
+gunicorn==19.7.1
