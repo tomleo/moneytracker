@@ -1,11 +1,13 @@
 import os
 import cson
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # moneytracker/mt
-ROOT = os.path.realpath(os.path.abspath(os.path.join(BASE_DIR, '../'))) # moneytracker/
 
-ext_settings_file = os.environ.get('ext_settings_file', 'ext_settings.cson')
-CONFIG_FILE = os.path.join(ROOT, ext_settings_file) # moneytracker/ext_settings.cson
-
+# moneytracker/mt
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# moneytracker/
+ROOT = os.path.realpath(os.path.abspath(os.path.join(BASE_DIR, '../')))
+# moneytracker/ext_settings.cson
+CONFIG_FILE = os.path.join(
+    ROOT, os.environ.get('ext_settings_file', 'ext_settings.cson'))
 try:
     with open(CONFIG_FILE) as f:
         ext = cson.loads(f.read())
@@ -100,8 +102,8 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-     'handlers': {
-         'file': {
+    'handlers': {
+        'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': ext.get('log_file', os.path.join(ROOT, 'mt.log'))
